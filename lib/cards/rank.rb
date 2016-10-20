@@ -1,8 +1,16 @@
-class Card
+module Cards
   class Rank
     include Comparable
 
-    VALUES = %i(2 3 4 5 6 7 8 9 T J Q K A)
+    VALUES = %i(2 3 4 5 6 7 8 9 T J Q K A).freeze
+
+    class << self
+      def generate_full_set
+        VALUES.map do |v|
+          new(v)
+        end
+      end
+    end
 
     def initialize(value)
       fail InvalidValueError, "#{value}, #{value.class} is not Symbol or valid rank." unless VALUES.include?(value)

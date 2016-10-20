@@ -1,6 +1,6 @@
-class Card
+module Cards
   class Suit
-    VALID_SUITS = %i(d h c s)
+    VALID_SUITS = %i(d h c s).freeze
 
     def initialize(value)
       fail InvalidSuitError, "#{value}, #{value.class} is not Symbol or valid suit #{ VALID_SUITS.reduce('') { |m, s| m << s.to_s }}." unless VALID_SUITS.include?(value)

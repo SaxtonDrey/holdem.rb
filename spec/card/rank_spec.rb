@@ -32,24 +32,24 @@ describe Card::Rank do
   end
 
   describe 'comparing' do
-    let(:card1) { Card::Rank.new(value1) }
-    let(:card2) { Card::Rank.new(value2) }
+    let(:rank1) { Card::Rank.new(value1) }
+    let(:rank2) { Card::Rank.new(value2) }
     let(:value1) { :K }
 
     describe '<=>'
     context 'K vs A' do
       let(:value2) { :A }
-      it { expect(card1).to be < card2 }
+      it { expect(rank1).to be < rank2 }
     end
 
     context 'K vs K' do
       let(:value2) { :K }
-      it { expect(card1).to eq card2 }
+      it { expect(rank1).to eq rank2 }
     end
 
     context 'K vs Q' do
       let(:value2) { :Q }
-      it { expect(card1).to be > card2 }
+      it { expect(rank1).to be > rank2 }
     end
   end
 end
