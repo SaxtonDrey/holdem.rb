@@ -19,30 +19,30 @@ module Hands
       @cards = hands.sort.freeze
     end
 
-    def <=>
-      # TODO: ハンドの強さ比較を実装
+    def <=>(other)
+      rank <=> other.rank
     end
 
     def rank
       @rank = case true
               when straight_flush?
-                :straight_flush
+                StraightFlush.new(self)
               when four_of_a_kind?
-                :four_of_a_kind
+                FourOfAKind.new(self)
               when full_house?
-                :full_house
+                FullHouse.new(self)
               when flush?
-                :flush
+                Flush.new(self)
               when straight?
-                :straight
+                Straight.new(self)
               when three_of_kind?
-                :three_of_kind
+                ThreeOfAKind.new(self)
               when two_pair?
-                :two_pair
+                TwoPair.new(self)
               when one_pair?
-                :one_pair
+                OnePair.new(self)
               else
-                :high_card
+                HighCard.new(self)
               end
     end
 
@@ -96,6 +96,58 @@ module Hands
 
     def step?
       @step ||= cards.map { |c| c.rank - cards.first.rank } == [0, 1, 2, 3, 4]
+    end
+
+    class StraightFlush
+      include HandCompareConcern
+      include StraightConcern
+    end
+
+    class Straight
+      include HandCompareConcern
+      include StraightConcern
+    end
+
+    class Straight
+      include HandCompareConcern
+      include StraightConcern
+    end
+
+
+    class Flush
+      include HandCompareConcern
+      include StraightConcern
+    end
+
+
+    class FullHouse
+      include HandCompareConcern
+      include FullHouseConcern
+    end
+
+    class FourOfAKind
+      include HandCompareConcern
+      include PairConcern
+    end
+
+    class ThreeOfAKind
+      include HandCompareConcern
+      include PairConcern
+    end
+
+    class TwoPair
+      include HandCompareConcern
+      include PairConcern
+    end
+
+    class OnePair
+      include HandCompareConcern
+      include PairConcern
+    end
+
+    class HighCard
+      include HandCompareConcern
+      include PairConcern
     end
   end
 end
