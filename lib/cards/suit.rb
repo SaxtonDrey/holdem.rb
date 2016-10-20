@@ -7,6 +7,20 @@ module Cards
       @val = value
     end
 
+    def hash
+      @val.hash
+    end
+
+    def eql?(other)
+      @val.eql?(other.val)
+    end
+
+    protected
+
+    def val
+      @val
+    end
+
     class InvalidSuitError < StandardError; end
   end
 end

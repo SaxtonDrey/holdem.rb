@@ -19,22 +19,22 @@ module Cards
 
     def <=>(other)
       return nil unless other.is_a?(Rank)
-      VALUES.index(self.val) <=> VALUES.index(other.val)
+      order <=> other.order
     end
 
     def to_s
       @val.to_s
     end
 
-    protected
-
-    def val
-      @val
+    def -(other)
+      fail ArgumentError, "#{other} is not Card::Rank" unless other.is_a?(Rank)
+      order - other.order
     end
 
-    private
+    protected
 
-    def check_value!(value)
+    def order
+      VALUES.index(@val)
     end
 
     class InvalidValueError < StandardError; end
