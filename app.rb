@@ -1,6 +1,7 @@
 require 'bundler'
 Bundler.require
 require 'forwardable'
+require 'active_support/core_ext'
 require 'active_support/dependencies'
 require 'active_support/concern'
 require 'active_support/inflector'

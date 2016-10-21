@@ -1,7 +1,6 @@
 require 'bundler'
-
 Bundler.require
-
+require 'active_support/core_ext'
 require 'active_support/dependencies'
 require 'forwardable'
 require './spec/factories/card_generator'

@@ -95,7 +95,7 @@ module Hands
     end
 
     def step?
-      @step ||= cards.map { |c| c.rank - cards.first.rank } == [0, 1, 2, 3, 4]
+      @step ||= cards.map { |c| c.rank - cards.first.rank }.in?([[0, 1, 2, 3, 4], [0, 1, 2, 3, 12]])
     end
 
     class StraightFlush
@@ -116,13 +116,13 @@ module Hands
 
     class Flush
       include HandCompareConcern
-      include StraightConcern
+      include FlushConcern
     end
 
 
     class FullHouse
       include HandCompareConcern
-      include FullHouseConcern
+      include PairConcern
     end
 
     class FourOfAKind
