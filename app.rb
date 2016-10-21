@@ -12,15 +12,28 @@ table = Tables::Table.new
 cs = Cards::CardStack.new.shuffle!
 dealer = Tables::Dealer.new(table, cs)
 
-
-puts 'Enter your Name'
 u1 = Tables::User.new
+u2 = Tables::User.new
 table.add_user(u1)
-puts "Dealer > Ok, lets start"
+table.add_user(u2)
+puts 'Dealer > Ok, lets start'
+sleep 1
 
 5.times do
   dealer.deal
   puts "you recieved #{u1.cards.last}"
+  puts "The man recieved #{u2.cards.last}"
+  sleep 2
 end
+hand1 = Hands::Hand.new(*u1.cards)
+hand2 = Hands::Hand.new(*u2.cards)
+puts "You make #{hand1.rank}"
+puts "The man make #{hand2.rank}"
 
-puts "You make #{Hands::Hand.new(*u1.cards).rank}"
+if hand1 > hand2
+  puts 'You won!'
+elsif hand1 < hand2
+  puts 'You lose.'
+else
+  puts 'draw'
+end

@@ -16,7 +16,16 @@ module Cards
     end
 
     def to_s
-      val.to_s
+      case val
+      when :d
+        '♦'
+      when :h
+        '♥'
+      when :c
+        '♣'
+      when :s
+        '♠'
+      end
     end
 
     protected
