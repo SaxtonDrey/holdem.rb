@@ -1,7 +1,7 @@
 module Cards
   class CardStack
     extend Forwardable
-    def_delegators(:@cards, :[], :each, :count)
+    def_delegators(:@cards, :[], :each, :count, :shuffle!, :pop)
 
     def initialize
       @cards = []
@@ -10,10 +10,6 @@ module Cards
           @cards << Card.new(Suit.new(suit), Rank.new(rank))
         end
       end
-    end
-
-    def shuffle!
-      @cards.shuffle!
     end
   end
 end

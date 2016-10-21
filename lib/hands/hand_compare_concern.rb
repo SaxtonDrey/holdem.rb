@@ -16,6 +16,11 @@ module Hands
       compare_same_hand_rank(other)
     end
 
+    def to_s
+      cls = self.class
+      "#{cls.name.demodulize} #{hand}"
+    end
+
     def index_of_hand_rank
       cls = self.class
       HAND_RANKS.index(cls.name.demodulize.underscore)

@@ -46,6 +46,12 @@ module Hands
               end
     end
 
+    def to_s
+      cards.reduce('[ ') { |s, c| s << "#{c} " } + ']'
+    end
+
+    private
+
     def straight_flush?
       same_suit? && step?
     end

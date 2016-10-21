@@ -12,5 +12,9 @@ module Cards
       return unless other.is_a?(Card)
       @rank <=> other.rank
     end
+
+    def to_s
+      "#{rank}#{suit}"
+    end
   end
 end

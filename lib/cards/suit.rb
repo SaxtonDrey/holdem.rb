@@ -8,11 +8,15 @@ module Cards
     end
 
     def hash
-      @val.hash
+      val.hash
     end
 
     def eql?(other)
-      @val.eql?(other.val)
+      val.eql?(other.val)
+    end
+
+    def to_s
+      val.to_s
     end
 
     protected
