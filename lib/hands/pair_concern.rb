@@ -18,20 +18,20 @@ module Hands
       if hand.rank_count.count(3) == 3
         # full house
         # three of a kind
-        ranks << new_cards.slice!(hand.rank_count.index(3), 3).map(&:rank)
+        ranks += new_cards.slice!(hand.rank_count.index(3), 3).map(&:rank)
       elsif hand.rank_count.count(2) == 2
         # one pair
-        ranks << new_cards.slice!(hand.rank_count.index(2), 2).map(&:rank)
+        ranks += new_cards.slice!(hand.rank_count.index(2), 2).map(&:rank)
       elsif hand.rank_count.count(4) == 4
         # four of a kind
-        ranks << new_cards.slice!(hand.rank_count.index(4), 4).map(&:rank)
+        ranks += new_cards.slice!(hand.rank_count.index(4), 4).map(&:rank)
       elsif hand.rank_count.count(2) == 4
         # two pair
-        # TODO: ペア同士の大小比較
-        ranks << new_cards.slice!(hand.rank_count.index(2), 2).map(&:rank)
-        ranks << new_cards.slice!(hand.rank_count.index(2), 2).map(&:rank)
+        ranks += new_cards.slice!(hand.rank_count.index(2), 2).map(&:rank)
+        ranks += new_cards.slice!(hand.rank_count.index(2), 2).map(&:rank)
+        ranks.reverse! if ranks[0] < ranks[2]
       end
-      ranks << Array(new_cards).map(&:rank).reverse
+      ranks + Array(new_cards).map(&:rank).reverse
     end
   end
 end
