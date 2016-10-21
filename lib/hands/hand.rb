@@ -13,10 +13,10 @@ module Hands
     include Comparable
     attr_reader :cards
 
-    def initialize(*hands)
-      fail if hands.size > 5
-      fail if hands.size < 4
-      @cards = hands.sort.freeze
+    def initialize(*cards)
+      fail 'cards too many' if cards.size > 5
+      fail 'cards too less'if cards.size < 4
+      @cards = cards.sort.freeze
     end
 
     def <=>(other)
@@ -24,7 +24,7 @@ module Hands
     end
 
     def rank
-      @rank = case true
+      @rank ||= case true
               when straight_flush?
                 StraightFlush.new(self)
               when four_of_a_kind?

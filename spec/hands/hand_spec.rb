@@ -1,176 +1,195 @@
 require 'spec_helper'
 describe Hands::Hand do
-  let(:hand1) { Hands::Hand.new(card1, card2, card3, card4, card5) }
-  let(:card1) { Cards::Card.new(suit1, rank1) }
-  let(:card2) { Cards::Card.new(suit2, rank2) }
-  let(:card3) { Cards::Card.new(suit3, rank3) }
-  let(:card4) { Cards::Card.new(suit4, rank4) }
-  let(:card5) { Cards::Card.new(suit5, rank5) }
-
-  let(:suit1) { d }
-  let(:suit2) { c }
-  let(:suit3) { c }
-  let(:suit4) { d }
-  let(:suit5) { d }
-
-  let(:rank1) { two }
-  let(:rank2) { three }
-  let(:rank3) { four }
-  let(:rank4) { five }
-  let(:rank5) { seven }
-
-  let(:two) { Cards::Rank.new(:'2') }
-  let(:three) { Cards::Rank.new(:'3') }
-  let(:four) { Cards::Rank.new(:'4') }
-  let(:five) { Cards::Rank.new(:'5') }
-  let(:six) { Cards::Rank.new(:'6') }
-  let(:seven) { Cards::Rank.new(:'7') }
-  let(:eight) { Cards::Rank.new(:'8') }
-  let(:nine) { Cards::Rank.new(:'9') }
-  let(:ten) { Cards::Rank.new(:T) }
-  let(:jack) { Cards::Rank.new(:J) }
-  let(:queen) { Cards::Rank.new(:Q) }
-  let(:king) { Cards::Rank.new(:K) }
-  let(:ace) { Cards::Rank.new(:A) }
-
-  let(:d) { Cards::Suit.new(:d) }
-  let(:c) { Cards::Suit.new(:c) }
-  let(:s) { Cards::Suit.new(:s) }
-  let(:h) { Cards::Suit.new(:h) }
-
+  let(:hand1) { HandGenerator.generate(hand_str1) }
 
   describe '#rank' do
     subject { hand1.rank }
 
     context 'Straight flush' do
-      let(:suit1) { d }
-      let(:suit2) { d }
-      let(:suit3) { d }
-      let(:suit4) { d }
-      let(:suit5) { d }
-
-      let(:rank1) { two }
-      let(:rank2) { three }
-      let(:rank3) { four }
-      let(:rank4) { five }
-      let(:rank5) { six }
-
-      it { is_expected.to be :straight_flush }
+      let(:hand_str1) { 'AsKsQsJsTs' }
+      it { is_expected.to be_a_kind_of(Hands::Hand::StraightFlush) }
     end
 
     context 'Four of a kind' do
-      let(:suit1) { d }
-      let(:suit2) { d }
-      let(:suit3) { h }
-      let(:suit4) { s }
-      let(:suit5) { c }
-
-      let(:rank1) { two }
-      let(:rank2) { three }
-      let(:rank3) { three }
-      let(:rank4) { three }
-      let(:rank5) { three }
-
-      it { is_expected.to be :four_of_a_kind }
+      let(:hand_str1) { '8s8c8d8hTs' }
+      it { is_expected.to be_a_kind_of(Hands::Hand::FourOfAKind) }
     end
 
     context 'Full house' do
-      let(:suit1) { d }
-      let(:suit2) { h }
-      let(:suit3) { s }
-      let(:suit4) { c }
-      let(:suit5) { d }
-
-      let(:rank1) { two }
-      let(:rank2) { two }
-      let(:rank3) { three }
-      let(:rank4) { three }
-      let(:rank5) { three }
-
-      it { is_expected.to be :full_house }
+      let(:hand_str1) { '8s8c8dThTs' }
+      it { is_expected.to be_a_kind_of(Hands::Hand::FullHouse) }
     end
 
     context 'Flush' do
-      let(:suit1) { d }
-      let(:suit2) { d }
-      let(:suit3) { d }
-      let(:suit4) { d }
-      let(:suit5) { d }
-
-      let(:rank1) { two }
-      let(:rank2) { three }
-      let(:rank3) { four }
-      let(:rank4) { seven }
-      let(:rank5) { ace }
-
-      it { is_expected.to be :flush }
+      let(:hand_str1) { '2s7s8s9sTs' }
+      it { is_expected.to be_a_kind_of(Hands::Hand::Flush) }
     end
 
     context 'straight' do
-      let(:suit1) { c }
-      let(:suit2) { d }
-      let(:suit3) { h }
-      let(:suit4) { d }
-      let(:suit5) { d }
-
-      let(:rank1) { two }
-      let(:rank2) { three }
-      let(:rank3) { four }
-      let(:rank4) { five }
-      let(:rank5) { six }
-
-      it { is_expected.to be :straight }
+      let(:hand_str1) { '2s3d4s5h6c' }
+      it { is_expected.to be_a_kind_of(Hands::Hand::Straight) }
     end
 
     context 'three of kind' do
-      let(:suit1) { d }
-      let(:suit2) { c }
-      let(:suit3) { s }
-      let(:suit4) { d }
-      let(:suit5) { d }
-
-      let(:rank1) { two }
-      let(:rank2) { two }
-      let(:rank3) { two }
-      let(:rank4) { seven }
-      let(:rank5) { ace }
-
-      it { is_expected.to be :three_of_kind }
+      let(:hand_str1) { '2s2d2c4h6c' }
+      it { is_expected.to be_a_kind_of(Hands::Hand::ThreeOfAKind) }
     end
 
     context 'two pair' do
-      let(:suit1) { d }
-      let(:suit2) { s }
-      let(:suit3) { d }
-      let(:suit4) { c }
-      let(:suit5) { d }
-
-      let(:rank1) { two }
-      let(:rank2) { two }
-      let(:rank3) { four }
-      let(:rank4) { four }
-      let(:rank5) { ace }
-
-      it { is_expected.to be :two_pair }
+      let(:hand_str1) { '2s2d4c4h6c' }
+      it { is_expected.to be_a_kind_of(Hands::Hand::TwoPair) }
     end
+
     context 'One pair' do
-      let(:suit1) { d }
-      let(:suit2) { s }
-      let(:suit3) { d }
-      let(:suit4) { d }
-      let(:suit5) { d }
-
-      let(:rank1) { two }
-      let(:rank2) { two }
-      let(:rank3) { four }
-      let(:rank4) { seven }
-      let(:rank5) { ace }
-
-      it { is_expected.to be :one_pair }
+      let(:hand_str1) { '2s2d4c5h6c' }
+      it { is_expected.to be_a_kind_of(Hands::Hand::OnePair) }
     end
 
     context 'High card' do
-      it { is_expected.to be :high_card }
+      let(:hand_str1) { '2s7d4c5h6c' }
+      it { is_expected.to be_a_kind_of(Hands::Hand::HighCard) }
+    end
+  end
+
+  describe 'comparing' do
+    context 'with different rank' do
+      let(:hand2) { HandGenerator.generate(hand_str2) }
+      subject { hand1 }
+
+      shared_examples 'VS Four of a kind' do
+        context do
+          let(:hand_str2) { '8s8c8d8hTd' }
+          it { expect(hand2.rank).to be_a_kind_of(Hands::Hand::FourOfAKind) }
+          it { is_expected.to be > hand2 }
+        end
+      end
+
+      shared_examples 'VS Full house' do
+        context do
+          let(:hand_str2) { '8s8c8dThTd' }
+          it { expect(hand2.rank).to be_a_kind_of(Hands::Hand::FullHouse) }
+          it { is_expected.to be > hand2 }
+        end
+      end
+
+      shared_examples 'VS Flush' do
+        context do
+          let(:hand_str2) { '2s3s6s8s9s' }
+          it { expect(hand2.rank).to be_a_kind_of(Hands::Hand::Flush) }
+          it { is_expected.to be > hand2 }
+        end
+      end
+
+      shared_examples 'VS Straight' do
+        context do
+          let(:hand_str2) { '2s3c4d5h6s' }
+          it { expect(hand2.rank).to be_a_kind_of(Hands::Hand::Straight) }
+          it { is_expected.to be > hand2 }
+        end
+      end
+
+      shared_examples 'VS Three of a kind' do
+        context do
+          let(:hand_str2) { '2s8c8d8hTd' }
+          it { expect(hand2.rank).to be_a_kind_of(Hands::Hand::ThreeOfAKind) }
+          it { is_expected.to be > hand2 }
+        end
+      end
+
+      shared_examples 'VS Two pair' do
+        context do
+          let(:hand_str2) { '2s8c8dThTd' }
+          it { expect(hand2.rank).to be_a_kind_of(Hands::Hand::TwoPair) }
+          it { is_expected.to be > hand2 }
+        end
+      end
+
+      shared_examples 'VS One pair' do
+        context do
+          let(:hand_str2) { '2s3c8d8hTd' }
+          it { expect(hand2.rank).to be_a_kind_of(Hands::Hand::OnePair) }
+          it { is_expected.to be > hand2 }
+        end
+      end
+
+      shared_examples 'VS High card' do
+        context do
+          let(:hand_str2) { '2s3c8d9hTd' }
+          it { expect(hand2.rank).to be_a_kind_of(Hands::Hand::HighCard) }
+          it { is_expected.to be > hand2 }
+        end
+      end
+
+
+      context 'Straight flush' do
+        let(:hand_str1) { 'AsKsQsJsTs' }
+        it { expect(hand1.rank).to be_a_kind_of(Hands::Hand::StraightFlush) }
+        include_examples 'VS Full house'
+        include_examples 'VS Flush'
+        include_examples 'VS Straight'
+        include_examples 'VS Three of a kind'
+        include_examples 'VS Two pair'
+        include_examples 'VS One pair'
+        include_examples 'VS High card'
+      end
+
+      context 'Four of a kind' do
+        let(:hand_str1) { '8s8c8d8hTd' }
+        include_examples 'VS Full house'
+        include_examples 'VS Flush'
+        include_examples 'VS Straight'
+        include_examples 'VS Three of a kind'
+        include_examples 'VS Two pair'
+        include_examples 'VS One pair'
+        include_examples 'VS High card'
+      end
+
+      context 'Full House' do
+        let(:hand_str1) { '8s8c8dThTd' }
+        include_examples 'VS Flush'
+        include_examples 'VS Straight'
+        include_examples 'VS Three of a kind'
+        include_examples 'VS Two pair'
+        include_examples 'VS One pair'
+        include_examples 'VS High card'
+      end
+
+      context 'Flush' do
+        let(:hand_str1) { '2s7s8s9sTs' }
+        include_examples 'VS Straight'
+        include_examples 'VS Three of a kind'
+        include_examples 'VS Two pair'
+        include_examples 'VS One pair'
+        include_examples 'VS High card'
+      end
+
+      context 'Straight' do
+        let(:hand_str1) { '2s3c4d5h6s' }
+        include_examples 'VS Three of a kind'
+        include_examples 'VS Two pair'
+        include_examples 'VS One pair'
+        include_examples 'VS High card'
+      end
+
+      context 'Three of a kind' do
+        let(:hand_str1) { '2s8c8d8hTd' }
+        include_examples 'VS Two pair'
+        include_examples 'VS One pair'
+        include_examples 'VS High card'
+      end
+
+      context 'Two pair' do
+        let(:hand_str1) { '2s8c8dThTd' }
+        it { expect(hand1.rank).to be_a_kind_of(Hands::Hand::TwoPair) }
+        include_examples 'VS One pair'
+        include_examples 'VS High card'
+      end
+
+      context 'One pair' do
+        let(:hand_str1) { '2s3c8d8hTd' }
+        it { expect(hand1.rank).to be_a_kind_of(Hands::Hand::OnePair) }
+        include_examples 'VS High card'
+      end
     end
   end
 end
