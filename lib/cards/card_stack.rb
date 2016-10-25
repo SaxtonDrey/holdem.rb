@@ -10,6 +10,7 @@ module Cards
           @cards << Card.new(Suit.new(suit), Rank.new(rank))
         end
       end
+      @cards.shuffle!
     end
   end
 end

@@ -1,12 +1,8 @@
 module Tables
   class Table
-    attr_reader :users, :dealer
+    attr_reader :users
     def initialize
       @users = []
-    end
-
-    def set_dealer(dealer)
-      @dealer = dealer
     end
 
     def add_user(user)
