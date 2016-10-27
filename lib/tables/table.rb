@@ -8,5 +8,9 @@ module Tables
     def add_user(user)
       @users << user
     end
+
+    def delete_user(user)
+      @users.delete(user)
+    end
   end
 end

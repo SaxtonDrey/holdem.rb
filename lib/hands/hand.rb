@@ -14,8 +14,8 @@ module Hands
     attr_reader :cards
 
     def initialize(*cards)
-      fail 'cards too many' if cards.size > 5
-      fail 'cards too less'if cards.size < 4
+      # fail 'cards too many' if cards.size > 5
+      # fail 'cards too less'if cards.size < 4
       @cards = cards.sort.freeze
     end
 
